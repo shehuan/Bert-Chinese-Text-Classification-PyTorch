@@ -1,5 +1,6 @@
 import torch
 from importlib import import_module
+from flask import Flask, request, jsonify
 
 key = {
     0: 'finance',
@@ -41,7 +42,7 @@ def build_predict_text(text):
     return ids, seq_len, mask
 
 
-def predict(text):
+def do_predict(text):
     """
     单个文本预测
     :param text:
@@ -54,5 +55,21 @@ def predict(text):
     return key[int(num)]
 
 
+server = Flask(__name__)
+
+
+def response(result, status='0'):
+    return jsonify({'result': result, 'status': status, })
+
+
+@server.route('/predict')
+def predict():
+    content = request.args.get('content', '', type=str)
+    if '' == content:
+        return response('文本不能为空', status='-1')
+    return response(do_predict(content))
+
+
 if __name__ == '__main__':
-    print(predict("备考2012高考作文必读美文50篇(一)"))
+    # print(do_predict("备考2012高考作文必读美文50篇(一)"))
+    server.run(port=8765)

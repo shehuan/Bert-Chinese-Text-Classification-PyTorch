@@ -7,7 +7,7 @@ import utils
 import train
 
 parser = argparse.ArgumentParser(description='Bruce-Bert-Text-Classification')
-parser.add_argument('--model', type=str, default='BruceBert', help='choose a model')
+parser.add_argument('--model', type=str, default='Bert', help='choose a model')
 args = parser.parse_args()
 
 if __name__ == '__main__':

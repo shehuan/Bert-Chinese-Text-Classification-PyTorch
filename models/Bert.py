@@ -35,7 +35,7 @@ class Config(object):
         # 学习率（0.00001）
         self.learning_rate = 5e-5
         # bert 预训练的模型位置
-        self.bert_path = 'bert_pretrain'
+        self.bert_path = './bert_pretrain'
         # bert 的分词器
         self.tokenizer = BertTokenizer.from_pretrained(self.bert_path)
         # bert 隐藏层个数

@@ -6,6 +6,7 @@ from sklearn import metrics
 import time
 from utils import get_time_dif
 from pytorch_pretrained.optimization import BertAdam
+import os
 
 
 def train(config, model, train_iter, dev_iter, test_iter):
@@ -34,6 +35,10 @@ def train(config, model, train_iter, dev_iter, test_iter):
                          lr=config.learning_rate,
                          warmup=0.05,
                          t_total=len(train_iter) * config.num_epochs)
+
+    # if os.path.exists(config.save_path):
+    #     model.load_state_dict(torch.load(config.save_path))
+    #     optimizer.load_state_dict(torch.load(config.save_path2))
 
     # 记录进行到了多少batch
     total_batch = 0
@@ -64,6 +69,7 @@ def train(config, model, train_iter, dev_iter, test_iter):
                     dev_best_loss = dev_loss
                     # 保存模型
                     torch.save(model.state_dict(), config.save_path)
+                    # torch.save(optimizer.state_dict(), config.save_path2)
                     improve = '*'
                     last_improve = total_batch
                 else:

@@ -9,7 +9,7 @@ class Config(object):
 
     def __init__(self, dataset):
         # 模型名称
-        self.model_name = "ERNIEDPCNN"
+        self.model_name = "ERNIE_DPCNN"
         # 训练集
         self.train_path = dataset + '/data/train.txt'
         # 校验集

@@ -1,6 +1,5 @@
 import torch
 from importlib import import_module
-from flask import Flask, request, jsonify
 
 key = {
     0: 'finance',
@@ -15,7 +14,7 @@ key = {
     9: 'entertainment'
 }
 
-x = import_module('models.' + 'BruceBert')
+x = import_module('models.' + 'Bert')
 config = x.Config('THUCNews')
 model = x.Model(config).to(config.device)
 model.load_state_dict(torch.load(config.save_path, map_location='cpu'))
@@ -55,21 +54,5 @@ def do_predict(text):
     return key[int(num)]
 
 
-server = Flask(__name__)
-
-
-def response(result, status='0'):
-    return jsonify({'result': result, 'status': status, })
-
-
-@server.route('/predict')
-def predict():
-    content = request.args.get('content', '', type=str)
-    if '' == content:
-        return response('文本不能为空', status='-1')
-    return response(do_predict(content))
-
-
 if __name__ == '__main__':
-    # print(do_predict("备考2012高考作文必读美文50篇(一)"))
-    server.run(port=8765)
+    print(do_predict("备考2012高考作文必读美文50篇(一)"))
